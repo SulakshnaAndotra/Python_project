@@ -56,13 +56,17 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    pass
+    numeric_weather_data = []
     for item in weather_data:
-        float(item)
-        list_mean = float(sum(weather_data)/ len(weather_data))
-        return list_mean
-
-
+        try:
+            numeric_weather_data.append(float(item))
+        except ValueError:
+            print(F"Non-Numeric data has been found and skipedz: {item}")
+    if not numeric_weather_data:
+        return None
+    list_mean = float(sum(numeric_weather_data)/ len(numeric_weather_data))
+    return list_mean
+       
 def load_data_from_csv(csv_file):
     """Reads a csv file and stores the data in a list.
 
@@ -71,8 +75,17 @@ def load_data_from_csv(csv_file):
     Returns:
         A list of lists, where each sublist is a (non-empty) line in the csv file.
     """
-    pass
+    new_list=[]
+    with open(csv_file, encoding="uft-8") as data:
+     reader = csv.reader(data)
+     for items in reader:
+        if items:
+         new_list.append(items)
 
+    return new_list
+    
+
+ 
 
 def find_min(weather_data):
     """Calculates the minimum value in a list of numbers.
@@ -82,7 +95,19 @@ def find_min(weather_data):
     Returns:
         The minimum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+    numeric_weather_data = []
+    for item in weather_data:
+        try:
+            numeric_weather_data.append(float(item))
+        except ValueError:
+            print(F"Non-Numeric data has been found and skipedz: {item}")
+    if not weather_data:
+        return ()
+    min_value = min(numeric_weather_data)
+    min_index_last = numeric_weather_data[::-1].index(min_value)
+    min_index = len(numeric_weather_data)-1-min_index_last
+    return (min_value, min_index)
+    
 
 
 def find_max(weather_data):
@@ -93,7 +118,18 @@ def find_max(weather_data):
     Returns:
         The maximum value and it's position in the list. (In case of multiple matches, return the index of the *last* example in the list.)
     """
-    pass
+    numeric_weather_data = []
+    for item in weather_data:
+        try:
+            numeric_weather_data.append(float(item))
+        except ValueError:
+            print(F"Non-Numeric data has been found and skipedz: {item}")
+    if not weather_data:
+        return ()
+    max_value = max(numeric_weather_data)
+    min_index_last = numeric_weather_data[::-1].index(max_value)
+    min_index = len(numeric_weather_data)-1-min_index_last
+    return (max_value, min_index)
 
 
 def generate_summary(weather_data):
