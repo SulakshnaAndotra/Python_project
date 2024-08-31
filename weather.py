@@ -83,7 +83,7 @@ def load_data_from_csv(csv_file):
      
      for items in reader:
         if items:
-         formatted_row = [items[0] + int(x)for x in items[1:]]
+         formatted_row = [items[0]] + [int(x) for x in items[1:]]
          new_list.append(formatted_row)
 
     return new_list
@@ -144,7 +144,8 @@ def generate_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    
+
 
 
 def generate_daily_summary(weather_data):
