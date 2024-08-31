@@ -64,7 +64,7 @@ def calculate_mean(weather_data):
             print(F"Non-Numeric data has been found and skipedz: {item}")  # if not numeric data
     if not numeric_weather_data:                  # if the lis is empty 
         return None
-    list_mean = float(sum(numeric_weather_data)/ len(numeric_weather_data))
+    list_mean = round(float(sum(numeric_weather_data)/ len(numeric_weather_data)), 1)
     return list_mean
        
 def load_data_from_csv(csv_file):
@@ -83,8 +83,8 @@ def load_data_from_csv(csv_file):
      
      for items in reader:
         if items:
-         formatted_row = [items[0]] + [int(x) for x in items[1:]]
-         new_list.append(formatted_row)
+         formatted_row = [items[0]] + [int(x) for x in items[1:]]   # read the first element as it is
+         new_list.append(formatted_row)                              # added both lists as lists can be added
 
     return new_list
     
@@ -140,11 +140,28 @@ def generate_summary(weather_data):
     """Outputs a summary for the given weather data.
 
     Args:
-        weather_data: A list of lists, where each sublist represents a day of weather data.
+    weather_data: A list of lists, where each sublist represents a day of weather data.
     Returns:
-        A string containing the summary information.
+    A string containing the summary information.
     """
-    
+    list_length= len(weather_data)
+    min_temp=[]
+    max_temp=[]
+    for row in weather_data:
+        min_temp.append(convert_f_to_c(row[1]))
+        max_temp.append(convert_f_to_c(row[2]))
+
+    min_overall_temp= min(min_temp)
+    max_overall_temp= max(max_temp)
+
+    index_min= min_temp.index(min(min_temp))
+    date_min = convert_date(weather_data[index_min][0])
+    index_max = max_temp.index(max(max_temp))
+    date_max = convert_date(weather_data[index_max][0])
+    avg_min= calculate_mean(min_temp)
+    avg_max= calculate_mean(max_temp)
+
+    return f"{list_length} Day Overview\n  The lowest temperature will be {min_overall_temp}{DEGREE_SYMBOL}, and will occur on {date_min}.\n  The highest temperature will be {max_overall_temp}{DEGREE_SYMBOL}, and will occur on {date_max}.\n  The average low this week is {avg_min}{DEGREE_SYMBOL}.\n  The average high this week is {avg_max}{DEGREE_SYMBOL}.\n"
 
 
 
@@ -156,4 +173,11 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    summary=""
+    for row in weather_data:
+        day_data= convert_date(row[0])
+        min_temp= convert_f_to_c(row[1])
+        max_temp= convert_f_to_c(row[2])
+        summary += f"---- {day_data} ----\n  Minimum Temperature: {min_temp}{DEGREE_SYMBOL}\n  Maximum Temperature: {max_temp}{DEGREE_SYMBOL}\n"
+    return summary
+    
