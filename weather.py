@@ -43,7 +43,7 @@ def convert_f_to_c(temp_in_fahrenheit):
         A float representing a temperature in degrees Celcius, rounded to 1 decimal place.
     """
     pass
-    temp_in_celsius = round((float(temp_in_fahrenheit) - 32) * 5/9, 1)
+    temp_in_celsius = round((float(temp_in_fahrenheit) - 32) * 5/9, 1) #round(x,1) is helping to round the decimal to 1
     return temp_in_celsius
     
 
@@ -56,13 +56,13 @@ def calculate_mean(weather_data):
     Returns:
         A float representing the mean value.
     """
-    numeric_weather_data = []
+    numeric_weather_data = []   #creating a new list to work on 
     for item in weather_data:
         try:
-            numeric_weather_data.append(float(item))
+            numeric_weather_data.append(float(item))   #moving all the elements into the new list as a float
         except ValueError:
-            print(F"Non-Numeric data has been found and skipedz: {item}")
-    if not numeric_weather_data:
+            print(F"Non-Numeric data has been found and skipedz: {item}")  # if not numeric data
+    if not numeric_weather_data:                  # if the lis is empty 
         return None
     list_mean = float(sum(numeric_weather_data)/ len(numeric_weather_data))
     return list_mean
@@ -76,11 +76,15 @@ def load_data_from_csv(csv_file):
         A list of lists, where each sublist is a (non-empty) line in the csv file.
     """
     new_list=[]
-    with open(csv_file, encoding="uft-8") as data:
+    
+    with open(csv_file) as data:
      reader = csv.reader(data)
+     next(reader)   #skipping header in data
+     
      for items in reader:
         if items:
-         new_list.append(items)
+         formatted_row = [items[0] + int(x)for x in items[1:]]
+         new_list.append(formatted_row)
 
     return new_list
     
@@ -104,8 +108,8 @@ def find_min(weather_data):
     if not weather_data:
         return ()
     min_value = min(numeric_weather_data)
-    min_index_last = numeric_weather_data[::-1].index(min_value)
-    min_index = len(numeric_weather_data)-1-min_index_last
+    min_index_last = numeric_weather_data[::-1].index(min_value)   #index of the last lowest element in reverse.
+    min_index = len(numeric_weather_data)-1-min_index_last       # calculation to find the index of the last element 
     return (min_value, min_index)
     
 
