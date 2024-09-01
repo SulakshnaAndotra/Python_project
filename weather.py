@@ -144,21 +144,21 @@ def generate_summary(weather_data):
     Returns:
     A string containing the summary information.
     """
-    list_length= len(weather_data)
+    list_length= len(weather_data)  #gives the length of the lisy 
     min_temp=[]
     max_temp=[]
     for row in weather_data:
-        min_temp.append(convert_f_to_c(row[1]))
-        max_temp.append(convert_f_to_c(row[2]))
+        min_temp.append(convert_f_to_c(row[1]))   #converting into celcius and saving the min temp in this list 
+        max_temp.append(convert_f_to_c(row[2])) # saving the max temp into a new list after converting into celcius
 
-    min_overall_temp= min(min_temp)
-    max_overall_temp= max(max_temp)
+    min_overall_temp= min(min_temp)   # saves the lowest temp from the list
+    max_overall_temp= max(max_temp) #saves the hight temp from the list
 
-    index_min= min_temp.index(min(min_temp))
-    date_min = convert_date(weather_data[index_min][0])
+    index_min= min_temp.index(min(min_temp))  #gives the index of the min temp 
+    date_min = convert_date(weather_data[index_min][0])  #with the help of index, date has been found 
     index_max = max_temp.index(max(max_temp))
     date_max = convert_date(weather_data[index_max][0])
-    avg_min= round(calculate_mean(min_temp),1)
+    avg_min= round(calculate_mean(min_temp),1)   
     avg_max= round(calculate_mean(max_temp),1)
 
     return f"{list_length} Day Overview\n  The lowest temperature will be {min_overall_temp}{DEGREE_SYMBOL}, and will occur on {date_min}.\n  The highest temperature will be {max_overall_temp}{DEGREE_SYMBOL}, and will occur on {date_max}.\n  The average low this week is {avg_min}{DEGREE_SYMBOL}.\n  The average high this week is {avg_max}{DEGREE_SYMBOL}.\n"
